@@ -17,15 +17,14 @@ def extract_msg(src_h, dst_h, m_domain, pcap_file):
     msg_type_msg = 1
     c2c = []
     for pkt in capture:
-        # Pkt is query between infected host and mal server
+        # Packet contains from infected host to malicious server
         if pkt.haslayer('IP') and src_h == pkt['IP'].src  and dst_h == pkt['IP'].dst and pkt.haslayer('DNS'):
             # Domain is malicious domain
             if m_domain in pkt['DNSQR'].qname.decode():
-               # remove ctlr bytes, newlines and .
                # see: https://github.com/iagox86/dnscat2/blob/master/doc/protocol.md#messages
-               # and https://github.com/iagox86/dnscat2/blob/master/doc/protocol.md#encoding               
+               # and also:  https://github.com/iagox86/dnscat2/blob/master/doc/protocol.md#encoding               
                c2_pkt = pkt['DNSQR'].qname.decode().split(m_domain)[0].replace('.', '').replace('\n', '')
-               # check if msg, we only care about msg
+               # check if message type is message_type_msg, we only care about these
                # https://github.com/iagox86/dnscat2/blob/master/doc/protocol.md#message_type_msg-0x01
                if bytearray.fromhex(c2_pkt)[2] == msg_type_msg:
                    c2c.append(c2_pkt[18:])
