@@ -1,5 +1,7 @@
 # dnscat2-decoder
-This is a simple script which I made to decode some dnscat2 traffic during a CTF.
+This script extracts [MESSAGE_TYPE_MSG](https://github.com/iagox86/dnscat2/blob/master/doc/protocol.md#message_type_msg-0x01) from a captured dnscat2 connection.
+
+I made this script for a CTF so stuff might break or is unstable.
 
 ## Requirements
 Requires Scapy
