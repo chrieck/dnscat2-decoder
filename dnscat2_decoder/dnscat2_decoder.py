@@ -37,7 +37,6 @@ def decode_c2c(c2c):
 
 def main():
     args = get_args()
-    args.file
     
     c2c = extract_c2c(args.source_host, args.target_host, args.domain, args.file)
     with open(args.output_file, 'w') as ofh:
